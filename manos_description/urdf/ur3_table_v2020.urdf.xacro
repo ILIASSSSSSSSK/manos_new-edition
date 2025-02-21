@@ -1,0 +1,213 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://wiki.ros.org/xacro" name="ur">
+   <material name="orange">
+
+    <color rgba="0.8 0.4 0.0 1.0"/>
+
+   </material>
+   <!-- import main macro -->
+   <!-- <xacro:include filename="$(find ur_description)/urdf/inc/ur_macro.xacro"/> -->
+   <xacro:include filename="$(find ur_gazebo)/urdf/ur_macro.xacro"/>
+
+   <!-- parameters -->
+   <xacro:arg name="joint_limit_params" default=""/>
+   <xacro:arg name="kinematics_params" default=""/>
+   <xacro:arg name="physical_params" default=""/>
+   <xacro:arg name="visual_params" default=""/>
+   <!-- legal values:
+         - hardware_interface/PositionJointInterface
+         - hardware_interface/VelocityJointInterface
+         - hardware_interface/EffortJointInterface
+   -->
+   <xacro:arg name="transmission_hw_interface" default="hardware_interface/PositionJointInterface"/>
+   <xacro:arg name="safety_limits" default="false"/>
+   <xacro:arg name="safety_pos_margin" default="0.15"/>
+   <xacro:arg name="safety_k_position" default="20"/>
+
+   <!-- arm -->
+   <xacro:ur_robot_gazebo
+     prefix=""
+     joint_limits_parameters_file="$(arg joint_limit_params)"
+     kinematics_parameters_file="$(arg kinematics_params)"
+     physical_parameters_file="$(arg physical_params)"
+     visual_parameters_file="$(arg visual_params)"
+     transmission_hw_interface="$(arg transmission_hw_interface)"
+     safety_limits="$(arg safety_limits)"
+     safety_pos_margin="$(arg safety_pos_margin)"
+     safety_k_position="$(arg safety_k_position)"/>
+   
+  
+   
+   <link name="world" />
+
+    <link name="box_link">
+      <visual>
+        <geometry>
+          <box size="1.0 1.0 0.86"/>
+        </geometry>
+      </visual>
+      <inertial>
+          <origin xyz="0 0 0" rpy="0 0 0"/>
+          <mass value="100"/>
+          <inertia ixx="1.0" ixy="0" ixz="0" iyy="1.0" iyz="0" izz="1.0" />
+      </inertial>
+      <collision>
+        <geometry>
+          <box size="1.0 1.0 0.86"/>
+        </geometry>
+      </collision>
+    </link>
+    
+    <material name="red">
+     <color rgba="1 0.3 0.4 1"/>
+    </material>
+    
+    <link name="target_position">
+        <visual>
+            <geometry>
+                <cylinder length="0.03" radius="0.01"/>
+            </geometry>
+            <origin rpy="0 0 0" xyz="0 0 0.43"/>
+        <material name="orange"/>   
+        </visual>
+        <inertial>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <mass value="1"/>
+            <inertia ixx="1.0" ixy="0" ixz="0" iyy="1.0" iyz="0" izz="1.0" />
+        </inertial>
+    </link>
+    
+    <link name="position1">
+        <visual>
+            <geometry>
+                <cylinder length="0.03" radius="0.01"/>
+            </geometry>
+            <origin rpy="0 0 0" xyz="0 0 0.43"/>
+        <material name="orange"/>   
+        </visual>
+        <inertial>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <mass value="1"/>
+            <inertia ixx="1.0" ixy="0" ixz="0" iyy="1.0" iyz="0" izz="1.0" />
+        </inertial>
+    </link>
+                          
+    <gazebo reference="position1">
+        <material>Gazebo/Blue</material>
+    </gazebo>
+    
+    <link name="position2">
+        <visual>
+            <geometry>
+                <cylinder length="0.03" radius="0.01"/>
+            </geometry>
+            <origin rpy="0 0 0" xyz="0 0 0.43"/>
+        <material name="orange"/>   
+        </visual>
+        <inertial>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <mass value="1"/>
+            <inertia ixx="1.0" ixy="0" ixz="0" iyy="1.0" iyz="0" izz="1.0" />
+        </inertial>
+    </link>
+                          
+    <gazebo reference="position2">
+        <material>Gazebo/Blue</material>
+    </gazebo>
+    
+    <link name="position3">
+        <visual>
+            <geometry>
+                <cylinder length="0.03" radius="0.01"/>
+            </geometry>
+            <origin rpy="0 0 0" xyz="0 0 0.43"/>
+        <material name="orange"/>   
+        </visual>
+        <inertial>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <mass value="1"/>
+            <inertia ixx="1.0" ixy="0" ixz="0" iyy="1.0" iyz="0" izz="1.0" />
+        </inertial>
+    </link>
+                          
+    <gazebo reference="position3">
+        <material>Gazebo/Blue</material>
+    </gazebo>
+    
+    <link name="position4">
+        <visual>
+            <geometry>
+                <cylinder length="0.03" radius="0.01"/>
+            </geometry>
+            <origin rpy="0 0 0" xyz="0 0 0.43"/>
+        <material name="orange"/>   
+        </visual>
+        <inertial>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <mass value="1"/>
+            <inertia ixx="1.0" ixy="0" ixz="0" iyy="1.0" iyz="0" izz="1.0" />
+        </inertial>
+    </link>
+                          
+    <gazebo reference="position4">
+        <material>Gazebo/Blue</material>
+    </gazebo>
+    
+    <gazebo reference="target_position">
+        <material>Gazebo/Red</material>
+    </gazebo>
+    
+    <joint name="world_joint" type="fixed">
+      <parent link="world" />
+      <child link = "box_link" />
+      <origin xyz="0.0 0.0 0.43" rpy="0.0 0.0 0.0" />
+    </joint>
+    
+    
+    <joint name="target_pos" type="fixed">
+        <parent link="world"/>
+        <child link="target_position"/>
+        <origin xyz="-0.265 -0.251 0.43" rpy="0.0 0.0 0.0"/>
+    </joint>
+    
+    <joint name="pos1" type="fixed">
+        <parent link="world"/>
+        <child link="position1"/>
+        <origin xyz="-0.346 -0.333 0.43" rpy="0.0 0.0 0.0"/>
+    </joint>
+    
+     <joint name="pos2" type="fixed">
+        <parent link="world"/>
+        <child link="position2"/>
+        <origin xyz="-0.345 -0.172 0.43" rpy="0.0 0.0 0.0"/>
+    </joint>
+    
+    <joint name="pos3" type="fixed">
+        <parent link="world"/>
+        <child link="position3"/>
+        <origin xyz="-0.185 -0.332 0.43" rpy="0.0 0.0 0.0"/>
+    </joint>
+    
+    <joint name="pos4" type="fixed">
+        <parent link="world"/>
+        <child link="position4"/>
+        <origin xyz="-0.184 -0.172 0.43" rpy="0.0 0.0 0.0"/>
+    </joint>
+
+     <joint name="box_joint" type="fixed">
+      <parent link="box_link"/>
+      <child link="base_link"/>
+      <origin xyz="0.0 0.0 0.43" rpy="0 0 1.57" />
+    </joint>
+
+    <link name="ee_link" />
+
+     <joint name="tool0_ee_link_joint" type="fixed">
+      <parent link="tool0"/>
+      <child link="ee_link"/>
+      <origin xyz="0.0 0.0 0.0" rpy="0 0 0.0" />
+    </joint>
+    
+    
+
+</robot>

@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://ros.org/wiki/xacro">
+
+  <xacro:macro name="schunk_pg70_gazebo" params="name">
+
+    <gazebo reference="${name}_base_link">
+      <self_collide>false</self_collide>
+    </gazebo>
+  
+    <gazebo reference="${name}_finger1_link">
+      <self_collide>false</self_collide>
+    </gazebo>
+  
+    <gazebo reference="${name}_finger2_link">
+      <self_collide>false</self_collide>
+    </gazebo>
+
+    <gazebo reference="${name}_fingertip_right_link">
+      <self_collide>false</self_collide>
+    </gazebo>
+
+    <gazebo reference="${name}_fingertip_left_link">
+      <self_collide>false</self_collide>
+    </gazebo>
+
+  </xacro:macro>
+
+</robot>
