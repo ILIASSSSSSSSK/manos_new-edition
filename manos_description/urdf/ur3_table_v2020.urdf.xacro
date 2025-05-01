@@ -187,7 +187,7 @@
      <joint name="box_joint" type="fixed">
       <parent link="box_link"/>
       <child link="base_link"/>
-      <!-- in the previous file the rpy was 0 0 1.57 but it does not make sense because this is changing the coordinate system and the ee_state is not correct in comparison with the real robot--> 
+      
       <origin xyz="0.0 0.0 0.43" rpy="0 0 1.57" />
     </joint>
 
