@@ -67,7 +67,7 @@
             <geometry>
                 <cylinder length="0.03" radius="0.01"/>
             </geometry>
-            <origin rpy="0 0 0" xyz="0 0 0.43"/>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
         <material name="orange"/>   
         </visual>
         <inertial>
@@ -82,7 +82,7 @@
             <geometry>
                 <cylinder length="0.03" radius="0.01"/>
             </geometry>
-            <origin rpy="0 0 0" xyz="0 0 0.43"/>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
         <material name="orange"/>   
         </visual>
         <inertial>
@@ -101,7 +101,7 @@
             <geometry>
                 <cylinder length="0.03" radius="0.01"/>
             </geometry>
-            <origin rpy="0 0 0" xyz="0 0 0.43"/>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
         <material name="orange"/>   
         </visual>
         <inertial>
@@ -120,7 +120,7 @@
             <geometry>
                 <cylinder length="0.03" radius="0.01"/>
             </geometry>
-            <origin rpy="0 0 0" xyz="0 0 0.43"/>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
         <material name="orange"/>   
         </visual>
         <inertial>
@@ -139,7 +139,7 @@
             <geometry>
                 <cylinder length="0.03" radius="0.01"/>
             </geometry>
-            <origin rpy="0 0 0" xyz="0 0 0.43"/>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
         <material name="orange"/>   
         </visual>
         <inertial>
@@ -148,6 +148,18 @@
             <inertia ixx="1.0" ixy="0" ixz="0" iyy="1.0" iyz="0" izz="1.0" />
         </inertial>
     </link>
+    <!--
+    <link name="laser_link">
+        <visual name="laser_link">
+            <geometry>
+                <cylinder length="0.25" radius="0.003"/>
+            </geometry>
+            <material name="laser_material">
+                <color rgba="1.0 0.0 0.0 0.7"/>
+            </material>
+        </visual>
+    </link>
+    -->
                           
     <gazebo reference="position4">
         <material>Gazebo/Blue</material>
@@ -156,6 +168,11 @@
     <gazebo reference="target_position">
         <material>Gazebo/Red</material>
     </gazebo>
+    <!--
+    <gazebo reference="laser_link">
+        <material>Gazebo/Green</material>
+    </gazebo>
+    -->
     
     <joint name="world_joint" type="fixed">
       <parent link="world" />
@@ -164,40 +181,44 @@
     </joint>
     
     
-    <joint name="target_pos" type="fixed">
-        <parent link="world"/>
-        <child link="target_position"/>
-        <origin xyz="-0.265 -0.251 0.43" rpy="0.0 0.0 0.0"/>
-    </joint>
     
-    <joint name="pos1" type="fixed">
-        <parent link="world"/>
-        <child link="position1"/>
-        <origin xyz="-0.346 -0.333 0.43" rpy="0.0 0.0 0.0"/>
-    </joint>
-    
-     <joint name="pos2" type="fixed">
-        <parent link="world"/>
-        <child link="position2"/>
-        <origin xyz="-0.345 -0.172 0.43" rpy="0.0 0.0 0.0"/>
-    </joint>
-    
-    <joint name="pos3" type="fixed">
-        <parent link="world"/>
-        <child link="position3"/>
-        <origin xyz="-0.185 -0.332 0.43" rpy="0.0 0.0 0.0"/>
-    </joint>
-    
-    <joint name="pos4" type="fixed">
-        <parent link="world"/>
-        <child link="position4"/>
-        <origin xyz="-0.184 -0.172 0.43" rpy="0.0 0.0 0.0"/>
-    </joint>
+
 
      <joint name="box_joint" type="fixed">
       <parent link="box_link"/>
       <child link="base_link"/>
+      <!-- in the previous file the rpy was 0 0 1.57 but it does not make sense because this is changing the coordinate system and the ee_state is not correct in comparison with the real robot--> 
       <origin xyz="0.0 0.0 0.43" rpy="0 0 1.57" />
+    </joint>
+
+    <joint name="target_pos" type="fixed">
+        <parent link="base_link"/>
+        <child link="target_position"/>
+        <origin xyz="-0.265 0.251 0" rpy="0.0 0.0 0.0"/>
+    </joint>
+    
+    <joint name="pos1" type="fixed">
+        <parent link="base_link"/>
+        <child link="position1"/>
+        <origin xyz="-0.346 0.333 0" rpy="0.0 0.0 0.0"/>
+    </joint>
+    
+     <joint name="pos2" type="fixed">
+        <parent link="base_link"/>
+        <child link="position2"/>
+        <origin xyz="-0.345 0.172 0" rpy="0.0 0.0 0.0"/>
+    </joint>
+    
+    <joint name="pos3" type="fixed">
+        <parent link="base_link"/>
+        <child link="position3"/>
+        <origin xyz="-0.185 0.332 0" rpy="0.0 0.0 0.0"/>
+    </joint>
+    
+    <joint name="pos4" type="fixed">
+        <parent link="base_link"/>
+        <child link="position4"/>
+        <origin xyz="-0.184 0.172 0" rpy="0.0 0.0 0.0"/>
     </joint>
 
     <link name="ee_link" />
@@ -207,7 +228,19 @@
       <child link="ee_link"/>
       <origin xyz="0.0 0.0 0.0" rpy="0 0 0.0" />
     </joint>
-    
+    <!--
+    <joint name="laser_joint" type="fixed">
+        <parent link="ee_link"/>
+        <child link="laser_link"/>
+        <origin xyz="0.0 -0.173 0.0" rpy="1.57 0.0 0.0"/> 
+    </joint>
+    -->
+    <gui fullscreen='0'>
+        <camera name="user_camera">
+            <pose>1.52237 0.071259 2.064016 0 0.539642 3.088186</pose>
+            <view_controller>orbit</view_controller>
+        </camera>
+    </gui>
     
 
 </robot>
